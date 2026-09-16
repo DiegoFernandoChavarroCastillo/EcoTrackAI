@@ -1,0 +1,22 @@
+/* El único responsable del ritmo vertical de la página es .stack:
+   los hijos no llevan márgenes externos para no sumarse al gap. */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.headline {
+  margin-top: 0.75rem;
+  font-size: clamp(1.75rem, 1.35rem + 2vw, 2.375rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.lede {
+  margin-top: 0.875rem;
+  color: var(--moss);
+  max-width: 30rem;
+}

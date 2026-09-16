@@ -1,0 +1,216 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.25rem;
+  animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* --- Total ------------------------------------------------------------ */
+.total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.figure {
+  font-size: clamp(2.75rem, 2rem + 4.5vw, 3.75rem);
+  font-weight: 500;
+}
+
+.unit {
+  font-size: 1rem;
+  color: var(--moss);
+}
+
+.summary {
+  margin-top: 0.875rem;
+  color: var(--moss);
+  font-size: 0.9375rem;
+}
+
+/* --- Desglose: cada fila es una línea de recibo con su propia barra ---- */
+.breakdown {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.5rem;
+}
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.625rem;
+  margin: 0 -0.625rem;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: rise 0.35s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  animation-delay: calc(120ms + var(--index) * 70ms);
+}
+
+/* La proporción del total se dibuja como fondo de la fila, no como gráfico aparte. */
+.fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--share);
+  background: var(--leaf-soft);
+  animation: grow 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  animation-delay: calc(200ms + var(--index) * 70ms);
+}
+
+@keyframes grow {
+  from {
+    width: 0;
+  }
+}
+
+.rowText,
+.rowValue {
+  position: relative;
+}
+
+.rowText {
+  min-width: 0;
+}
+
+.name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.detail {
+  display: block;
+  margin-top: 0.125rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  color: var(--moss);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.rowValue {
+  flex: none;
+  text-align: right;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9375rem;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.625rem 0.375rem;
+}
+
+.note {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--moss);
+}
+
+/* --- Cargando --------------------------------------------------------- */
+.skeleton {
+  composes: card;
+}
+
+.bone {
+  background: linear-gradient(90deg, var(--leaf-soft), #f2f8f4, var(--leaf-soft));
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: sweep 1.4s ease-in-out infinite;
+}
+
+@keyframes sweep {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.boneFigure {
+  composes: bone;
+  height: 3rem;
+  width: 62%;
+  margin-top: 0.5rem;
+}
+
+.boneLine {
+  composes: bone;
+  height: 0.75rem;
+  width: 85%;
+  margin-top: 1rem;
+}
+
+.boneRow {
+  composes: bone;
+  height: 2.75rem;
+  margin-top: 0.75rem;
+}
+
+.boneRow:first-of-type {
+  margin-top: 1.75rem;
+}
+
+/* --- Error ------------------------------------------------------------ */
+.error {
+  composes: card;
+  border-color: #e7cfc9;
+  background: var(--rust-soft);
+}
+
+.errorTitle {
+  margin-top: 0.5rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--rust);
+}
+
+.errorBody {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+  color: #6f4036;
+}
+
+.retry {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: var(--rust);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid #dcbcb4;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.retry:hover {
+  background: #f2ddd8;
+}
+
+.errorEyebrow {
+  color: var(--rust);
+  opacity: 0.8;
+}
+
+@media (min-width: 40rem) {
+  .card,
+  .skeleton,
+  .error {
+    padding: 1.75rem 1.5rem;
+  }
+}

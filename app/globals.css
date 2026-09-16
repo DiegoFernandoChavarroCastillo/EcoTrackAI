@@ -1,0 +1,107 @@
+/*
+ * Tokens y base tipográfica. Todo lo específico de un componente vive
+ * en su propio *.module.css para que no haya colisiones de especificidad.
+ */
+:root {
+  /* Verdes y blancos. El negro nunca es negro: siempre verde muy oscuro. */
+  --paper: #fbfdfb;
+  --surface: #ffffff;
+  --ink: #0e1a13;
+  --moss: #5a7565;
+  --leaf: #15704a;
+  --leaf-deep: #0e5537;
+  --leaf-soft: #e3f1e8;
+  --line: #dbe7de;
+  /* Único color fuera de la paleta: reservado a los errores. */
+  --rust: #8c3a2b;
+  --rust-soft: #f8ece9;
+
+  --radius: 14px;
+  --gutter: 1.25rem;
+  --column: 36rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--leaf);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Columna única y centrada: mobile-first, sin ensancharse en escritorio. */
+.main {
+  width: 100%;
+  max-width: var(--column);
+  margin: 0 auto;
+  padding: 2.5rem var(--gutter) 5rem;
+}
+
+@media (min-width: 40rem) {
+  .main {
+    padding-top: 4rem;
+  }
+}
+
+/* Etiqueta de sección: mono, versalitas, para separar zonas sin dibujar cajas. */
+.eyebrow {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
