@@ -1,0 +1,94 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.625rem;
+}
+
+.field {
+  width: 100%;
+  min-height: 8.5rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field::placeholder {
+  color: var(--moss);
+  opacity: 0.75;
+}
+
+.field:hover:not(:disabled) {
+  border-color: #c6dbcd;
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 3px var(--leaf-soft);
+}
+
+.field:disabled {
+  background: var(--paper);
+  cursor: not-allowed;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.count {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--moss);
+  font-variant-numeric: tabular-nums;
+}
+
+.submit {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  background: var(--leaf);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border: 1px solid var(--leaf);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--leaf-deep);
+}
+
+.submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.submit:disabled {
+  background: #b9cfc1;
+  border-color: #b9cfc1;
+  cursor: not-allowed;
+}
+
+/* En escritorio el contador y el botón comparten línea. */
+@media (min-width: 30rem) {
+  .footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .submit {
+    width: auto;
+  }
+}
