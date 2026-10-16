@@ -62,6 +62,12 @@ function exigirPositivo(valor: number | undefined, campo: string): number {
  * - Equipo: kWh = kW × horas/día × días × número de equipos (regla 3).
  */
 export function convertirAUnidadFisica(actividad: Actividad, catalogo: CatalogoFactores): number {
+  // Los tipos ya limitan la fuente, pero el dato puede venir de un JSON:
+  // se valida también en tiempo de ejecución, antes de buscar tarifas o unidades.
+  const fuente: string = actividad.fuente;
+  if (!Object.hasOwn(UNIDAD_FISICA, fuente) || !Object.hasOwn(catalogo.factoresEmision, fuente)) {
+    throw new ErrorCalculo(`La fuente "${fuente}" no está en el catálogo.`);
+  }
   exigirNoNegativo(actividad.cantidad, "La cantidad");
 
   switch (actividad.unidad) {
@@ -74,6 +80,10 @@ export function convertirAUnidadFisica(actividad: Actividad, catalogo: CatalogoF
     }
 
     case "equipo": {
+      // Un equipo produce kWh: aplicarle el factor de otra fuente daría un número sin sentido.
+      if (fuente !== "electricidad") {
+        throw new ErrorCalculo(`El modo equipo solo aplica a electricidad, no a "${fuente}".`);
+      }
       exigirNoNegativo(actividad.horasPorDia, "Las horas por día");
       exigirNoNegativo(actividad.dias, "Los días");
       if (actividad.horasPorDia > 24) {

@@ -152,6 +152,25 @@ describe("Entradas inválidas", () => {
     ).toThrow(/tostadora/);
   });
 
+  it.each([0, -800])("rechaza una tarifa de %d COP", (tarifa) => {
+    const catalogo = { ...CATALOGO_PRUEBA, tarifasCop: { ...CATALOGO_PRUEBA.tarifasCop, electricidad: tarifa } };
+    expect(() =>
+      calcularHuella([{ fuente: "electricidad", unidad: "COP", cantidad: 480_000, origen: "declarado" }], catalogo)
+    ).toThrow("El catálogo no tiene un valor válido para la tarifa de electricidad.");
+  });
+
+  it.each(["kg", "COP"])("rechaza una fuente fuera del catálogo (unidad %s)", (unidad) => {
+    const malo = { fuente: "carbon", unidad, cantidad: 1, origen: "declarado" } as unknown as Actividad;
+    expect(() => calcular([malo])).toThrow('La fuente "carbon" no está en el catálogo.');
+  });
+
+  it("rechaza el modo equipo con una fuente distinta de electricidad", () => {
+    const malo = {
+      fuente: "glp", unidad: "equipo", equipo: "nevera", cantidad: 1, horasPorDia: 1, dias: 1, origen: "declarado",
+    } as unknown as Actividad;
+    expect(() => calcular([malo])).toThrow('El modo equipo solo aplica a electricidad, no a "glp".');
+  });
+
   it("rechaza más de 24 horas por día", () => {
     expect(() =>
       calcular([{ fuente: "electricidad", unidad: "equipo", equipo: "nevera", cantidad: 1, horasPorDia: 25, dias: 1, origen: "declarado" }])
